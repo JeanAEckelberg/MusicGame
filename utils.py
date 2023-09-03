@@ -3,6 +3,7 @@ import sqlite3
 CiviPrompts = [
     'Pick a happy song!',
     'Pick a sad song!',
+    'Pick a funny song!',
 ]
 
 TraitorPrompts = [
@@ -10,6 +11,8 @@ TraitorPrompts = [
     ('1', 'Pick a song with a funky beat!'),
     ('2', 'Pick a song to play at a funeral!'),
     ('2', 'Pick a song to play when you\'re stressed out!'),
+    ('3', 'Pick a children\'s song!'),
+    ('3', 'Pick a song that you would hear in a carnival!'),
 ]
 
 
