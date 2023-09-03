@@ -14,7 +14,8 @@ class Game:
         self.conn: sqlite3.Connection = conn
 
     def run(self):
-        input(f'Room Seed: {self.seed}\nMax Capacity: {self.num_of_players}\nPlayer No: {self.player_number}\nPress Enter to Begin...')
+        input(
+            f'Room Seed: {self.seed}\nMax Capacity: {self.num_of_players}\nPlayer No: {self.player_number}\nPress Enter to Begin...')
         while True:
             self.__round()
             if input('Next Round? (Y/n)') in 'Nn':
@@ -22,8 +23,14 @@ class Game:
 
     def __round(self):
         self.traitor = self.player_number == self.rand.randint(1, self.num_of_players)
-        max: int = utils.get_rows(self.conn, "SELECT COUNT(1) FROM CiviPrompt")[0][0]
 
+        while True:
+            self.__test()
+            if input('Next Test? (Y/n)') in 'Nn':
+                break
+
+    def __test(self):
+        max: int = utils.get_rows(self.conn, "SELECT COUNT(1) FROM CiviPrompt")[0][0]
         prompt: str
         if self.traitor:
             prompt = Random().choice(utils.get_rows(self.conn,
