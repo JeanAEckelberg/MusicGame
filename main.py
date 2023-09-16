@@ -1,10 +1,12 @@
 import sqlite3
-import utils
-import game
+import os
+from src import game, utils
 
 
 def set_up():
-    conn = sqlite3.connect("MusicGame.db")
+    path = os.path.dirname(os.path.abspath(__file__))
+    db = os.path.join(path, 'src/MusicGame.db')
+    conn = sqlite3.connect(db)
     conn.execute("DROP TABLE IF EXISTS CiviPrompt")
     conn.execute("DROP TABLE IF EXISTS TraitorPrompt")
     conn.execute("CREATE TABLE IF NOT EXISTS CiviPrompt(Id INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -55,8 +57,10 @@ def get_settings() -> dict:
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    conn = set_up()
-    g = game.Game(conn, **get_settings())
-    g.run()
+    try:
+        conn = set_up()
+        g = game.Game(conn, **get_settings())
+        g.run()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    except Exception as e:
+        input(e)
