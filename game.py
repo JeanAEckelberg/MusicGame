@@ -32,12 +32,18 @@ class Game:
     def __test(self):
         max: int = utils.get_rows(self.conn, "SELECT COUNT(1) FROM CiviPrompt")[0][0]
         prompt: str
-        if self.traitor:
-            prompt = Random().choice(utils.get_rows(self.conn,
-                    f'SELECT Prompt from TraitorPrompt WHERE CiviPromptId = {self.rand.randint(1, max)}'))[0]
-        else:
-            prompt = utils.get_rows(self.conn, f'SELECT Prompt from CiviPrompt WHERE Id = {self.rand.randint(1, max)}')[0][0]
+        r = self.rand.randint(1, max)
 
         print(f'Traitor: {self.traitor}')
+
+        if self.traitor:
+            prompt = Random().choice(utils.get_rows(self.conn,
+                    f'SELECT Prompt from TraitorPrompt WHERE CiviPromptId = {r}'))[0]
+        else:
+            prompt = utils.get_rows(self.conn, f'SELECT Prompt from CiviPrompt WHERE Id = {r}')[0][0]
+
         print(prompt)
         input('Press Enter on round end...')
+
+        if self.traitor:
+            print(f'Civi Prompt: { utils.get_rows(self.conn, f"SELECT Prompt from CiviPrompt WHERE Id = {r}")[0][0]}')
